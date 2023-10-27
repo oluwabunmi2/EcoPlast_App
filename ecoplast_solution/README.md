@@ -50,4 +50,4 @@ npm start
 
 - **Jesse Maikarfi** - [Github](https://www.github.com/vassa33) (p.otieno@alustudent.com)
 - **Olwabunmi ** - [Github](https://www.github.com/Makuo67) (m.okeke@alustudent.com)
-- **Celestin HAKORIMANA** - [Github](https://www.github.com/Nino-Of-Tech) (c.nwachukwu@alustudent.com)
+- **Celestin HAKO** - [Github](https://www.github.com/Nino-Of-Tech) (c.nwachukwu@alustudent.com)
