@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 
 extension StateExtension on State {
   void mdShowAlert(String title, String message, VoidCallback onPressed,
@@ -32,10 +33,8 @@ extension StateExtension on State {
   }
 }
 
-
-extension StringExtension on String {
-  bool get isEmail {
-    return RegExp(
-            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(this);
+extension ExtendDateTime on DateTime {
+  String stringFormat({String  format = "yyyy-MM-dd"}) {
+    return DateFormat(format).format(this);
   }
 }

@@ -1,9 +1,20 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:workout_fitness/view/home/home_view.dart';
+import 'package:workout_fitness/view/meal_plan/meal_plan_view.dart';
+import 'package:workout_fitness/view/menu/yoga_view.dart';
 
 import '../../common/color_extension.dart';
-import '../../common_widget/round_textfield.dart';
-import '../more/my_order_view.dart';
-import 'menu_items_view.dart';
+import '../../common_widget/menu_cell.dart';
+import '../../common_widget/plan_row.dart';
+import '../exercise/exercise_view.dart';
+import '../exercise/exercise_view_2.dart';
+import '../meal_plan/meal_plan_view_2.dart';
+import '../running/running_view.dart';
+import '../schedule/schedule_view.dart';
+import '../weight/weight_view.dart';
 
 class MenuView extends StatefulWidget {
   const MenuView({super.key});
@@ -13,215 +24,338 @@ class MenuView extends StatefulWidget {
 }
 
 class _MenuViewState extends State<MenuView> {
-  List menuArr = [
+  List planArr = [
     {
-      "name": "Food",
-      "image": "assets/img/menu_1.png",
-      "items_count": "120",
+      "name": "Running",
+      "icon": "assets/img/menu_running.png",
+      "right_icon": "",
     },
     {
-      "name": "Beverages",
-      "image": "assets/img/menu_2.png",
-      "items_count": "220",
+      "name": "Yoga",
+      "icon": "assets/img/yoga.png",
+      "right_icon": "assets/img/information.png",
     },
     {
-      "name": "Desserts",
-      "image": "assets/img/menu_3.png",
-      "items_count": "155",
+      "name": "Workout",
+      "icon": "assets/img/workout.png",
+      "right_icon": "",
     },
     {
-      "name": "Promotions",
-      "image": "assets/img/menu_4.png",
-      "items_count": "25",
+      "name": "Walking",
+      "icon": "assets/img/walking.png",
+      "right_icon": "",
     },
+    {
+      "name": "Fitness",
+      "icon": "assets/img/fitness.png",
+      "right_icon": "assets/img/information.png",
+    },
+    {
+      "name": "Strength",
+      "icon": "assets/img/strength.png",
+      "right_icon": "",
+    }
   ];
-  TextEditingController txtSearch = TextEditingController();
+
+  List menuArr = [
+    {"name": "Home", "image": "assets/img/menu_home.png", "tag": "1"},
+    {"name": "Weight", "image": "assets/img/menu_weight.png", "tag": "2"},
+    {
+      "name": "Traning plan",
+      "image": "assets/img/menu_traning_plan.png",
+      "tag": "3"
+    },
+    {
+      "name": "Training Status",
+      "image": "assets/img/menu_traning_status.png",
+      "tag": "4"
+    },
+    {"name": "Meal Plan", "image": "assets/img/menu_meal_plan.png", "tag": "5"},
+    {"name": "Schedule", "image": "assets/img/menu_schedule.png", "tag": "6"},
+    {"name": "Running", "image": "assets/img/menu_running.png", "tag": "7"},
+    {"name": "Exercises", "image": "assets/img/menu_exercises.png", "tag": "8"},
+    {"name": "Tips", "image": "assets/img/menu_tips.png", "tag": "9"},
+    {"name": "Settings", "image": "assets/img/menu_settings.png", "tag": "10"},
+    {"name": "Support", "image": "assets/img/menu_support.png", "tag": "11"},
+  ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
+  }
 
   @override
   Widget build(BuildContext context) {
-    var media = MediaQuery.of(context).size;
+    var media = MediaQuery.sizeOf(context);
     return Scaffold(
-      body: Stack(
-        alignment: Alignment.centerLeft,
-        children: [
-          Container(
-            margin: const EdgeInsets.only(top: 180),
-            width: media.width * 0.27,
-            height: media.height * 0.6,
-            decoration: BoxDecoration(
-              color: TColor.primary,
-              borderRadius: const BorderRadius.only(
-                  topRight: Radius.circular(35),
-                  bottomRight: Radius.circular(35)),
+      drawer: Drawer(
+          width: media.width,
+          backgroundColor: Colors.transparent,
+          child: BackdropFilter(
+            filter: ImageFilter.blur(
+              sigmaX: 5.0,
+              sigmaY: 5,
             ),
-          ),
-          SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 46,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Stack(
+              children: [
+                Container(
+                  width: media.width * 0.78,
+                  decoration: BoxDecoration(color: TColor.white),
+                  child: SafeArea(
+                      child: Padding(
+                    padding: const EdgeInsets.only(left: 25),
+                    child: Column(
                       children: [
-                        Text(
-                          "Menu",
-                          style: TextStyle(
-                              color: TColor.primaryText,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w800),
+                        Container(
+                          height: kTextTabBarHeight,
+                          child: Row(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(22.5),
+                                child: Image.asset("assets/img/u1.png",
+                                    width: 45, height: 45, fit: BoxFit.cover),
+                              ),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              Expanded(
+                                child: Text(
+                                  "Traning Plan",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: TColor.secondaryText,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
-                        IconButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const MyOrderView()));
-                          },
-                          icon: Image.asset(
-                            "assets/img/shopping_cart.png",
-                            width: 25,
-                            height: 25,
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        const Divider(
+                          color: Colors.black26,
+                          height: 1,
+                        ),
+                        Expanded(
+                            child: ListView.builder(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 50),
+                                itemCount: planArr.length,
+                                itemBuilder: (context, index) {
+                                  var itemObj = planArr[index] as Map? ?? {};
+
+                                  return PlanRow(
+                                    mObj: itemObj,
+                                    onPressed: () {
+                                      // Navigator.pop(context);
+                                      if (index == 1) {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const YogaView()));
+                                      }
+                                    },
+                                  );
+                                })),
+                        const Divider(
+                          color: Colors.black26,
+                          height: 1,
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Container(
+                          height: kTextTabBarHeight,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Switch Account",
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    color: TColor.secondaryText,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 20),
+                                child: Image.asset("assets/img/next.png",
+                                    width: 18, height: 18),
+                              )
+                            ],
                           ),
                         ),
                       ],
                     ),
+                  )),
+                ),
+                Column(
+                  children: [
+                    const SizedBox(
+                      height: kToolbarHeight - 25,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 15),
+                          child: IconButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              icon: Image.asset(
+                                "assets/img/meun_close.png",
+                                width: 25,
+                                height: 25,
+                              )),
+                        ),
+                      ],
+                    )
+                  ],
+                )
+              ],
+            ),
+          )),
+      body: NestedScrollView(
+        headerSliverBuilder: (context, innerBoxIsScrolled) {
+          return [
+            SliverAppBar(
+              backgroundColor: Colors.black,
+              expandedHeight: media.width * 0.6,
+              collapsedHeight: kToolbarHeight + 20,
+              flexibleSpace: Stack(
+                alignment: Alignment.bottomLeft,
+                children: [
+                  Image.asset(
+                    "assets/img/1.png",
+                    width: media.width,
+                    height: media.width * 0.8,
+                    fit: BoxFit.cover,
                   ),
-                  const SizedBox(
-                    height: 20,
+                  Container(
+                    width: media.width,
+                    height: media.width * 0.8,
+                    decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                            colors: [Colors.transparent, Colors.black],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter)),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: RoundTextfield(
-                      hintText: "Search Food",
-                      controller: txtSearch,
-                      left: Container(
-                        alignment: Alignment.center,
-                        width: 30,
-                        child: Image.asset(
-                          "assets/img/search.png",
-                          width: 20,
-                          height: 20,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 25, vertical: 30),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 54,
+                          height: 54,
+                          decoration: BoxDecoration(
+                              color: TColor.white,
+                              borderRadius: BorderRadius.circular(27)),
+                          alignment: Alignment.center,
+                          child: ClipRRect(
+                              borderRadius: BorderRadius.circular(25),
+                              child: Image.asset(
+                                "assets/img/u1.png",
+                                width: 50,
+                                height: 50,
+                                fit: BoxFit.cover,
+                              )),
                         ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  ListView.builder(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 30, horizontal: 20),
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: menuArr.length,
-                      itemBuilder: ((context, index) {
-                        var mObj = menuArr[index] as Map? ?? {};
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => MenuItemsView(
-                                  mObj: mObj,
-                                ),
-                              ),
-                            );
-                          },
-                          child: Stack(
-                            alignment: Alignment.centerRight,
+                        const SizedBox(
+                          width: 15,
+                        ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
                             children: [
-                              Container(
-                                margin: const EdgeInsets.only(
-                                    top: 8, bottom: 8, right: 20),
-                                width: media.width - 100,
-                                height: 90,
-                                decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(25),
-                                        bottomLeft: Radius.circular(25),
-                                        topRight: Radius.circular(10),
-                                        bottomRight: Radius.circular(10)),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: Colors.black12,
-                                          blurRadius: 7,
-                                          offset: Offset(0, 4))
-                                    ]),
+                              Text("Code For Any",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: TColor.white,
+                                      fontWeight: FontWeight.w700)),
+                              const SizedBox(
+                                height: 4,
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    mObj["image"].toString(),
-                                    width: 80,
-                                    height: 80,
-                                    fit: BoxFit.contain,
-                                  ),
-                                  const SizedBox(
-                                    width: 15,
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          mObj["name"].toString(),
-                                          style: TextStyle(
-                                              color: TColor.primaryText,
-                                              fontSize: 22,
-                                              fontWeight: FontWeight.w700),
-                                        ),
-                                        const SizedBox(
-                                          height: 4,
-                                        ),
-                                        Text(
-                                          "${mObj["items_count"].toString()} items",
-                                          style: TextStyle(
-                                              color: TColor.secondaryText,
-                                              fontSize: 11),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 35,
-                                    height: 35,
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius:
-                                            BorderRadius.circular(17.5),
-                                        boxShadow: const [
-                                          BoxShadow(
-                                              color: Colors.black12,
-                                              blurRadius: 4,
-                                              offset: Offset(0, 2))
-                                        ]),
-                                    alignment: Alignment.center,
-                                    child: Image.asset(
-                                      "assets/img/btn_next.png",
-                                      width: 15,
-                                      height: 15,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              Text("Profile",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      color: TColor.white,
+                                      fontWeight: FontWeight.w500))
                             ],
                           ),
-                        );
-                      }))
+                        ),
+                      ],
+                    ),
+                  )
                 ],
               ),
-            ),
-          ),
-        ],
+            )
+          ];
+        },
+        body: GridView.builder(
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              crossAxisSpacing: 15,
+              mainAxisSpacing: 15,
+              childAspectRatio: 1),
+          itemCount: menuArr.length,
+          itemBuilder: ((context, index) {
+            var mObj = menuArr[index] as Map? ?? {};
+            return MenuCell(
+              mObj: mObj,
+              onPressed: () {
+                switch (mObj["tag"].toString()) {
+                  case "1":
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomeView()));
+                    break;
+                  case "2":
+                     Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const WeightView()));
+                    break;
+                  case "3":
+                    Scaffold.of(context).openDrawer();
+                    break;
+                   case "5":
+                     Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MealPlanView2()));
+                    break;
+                  case "6":
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ScheduleView()));
+                    break;
+                    case "7":
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const RunningView()));
+                    break;
+                   case "8":
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ExerciseView2()));
+                    break;
+                  default:
+                }
+              },
+            );
+          }),
+        ),
       ),
     );
   }

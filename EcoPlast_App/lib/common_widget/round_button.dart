@@ -2,37 +2,36 @@ import 'package:flutter/material.dart';
 
 import '../common/color_extension.dart';
 
-enum RoundButtonType { bgPrimary, textPrimary }
+enum RoundButtonType { primary, primaryText }
 
 class RoundButton extends StatelessWidget {
-  final VoidCallback onPressed;
   final String title;
-  final RoundButtonType type;
+  final VoidCallback onPressed;
   final double fontSize;
+  final FontWeight fontWeight;
+  final RoundButtonType type;
+
   const RoundButton(
       {super.key,
       required this.title,
       required this.onPressed,
-      this.fontSize = 16,
-      this.type = RoundButtonType.bgPrimary});
+      this.fontSize = 20,
+      this.fontWeight = FontWeight.w700 ,
+      this.type = RoundButtonType.primary});
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onPressed,
-      child: Container(
-        height: 56,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          border: type == RoundButtonType.bgPrimary ? null : Border.all(color: TColor.primary, width: 1),
-          color: type == RoundButtonType.bgPrimary ? TColor.primary : TColor.white,
-          borderRadius: BorderRadius.circular(28),
-        ),
-        child: Text(
-          title,
-          style: TextStyle(
-              color: type == RoundButtonType.bgPrimary ? TColor.white :  TColor.primary, fontSize: fontSize, fontWeight: FontWeight.w600),
-        ),
+    return MaterialButton(
+      onPressed: onPressed,
+      textColor: type == RoundButtonType.primary ? TColor.white :  TColor.primary,
+      color: type == RoundButtonType.primary ? TColor.primary : TColor.white,
+      height: 50,
+      minWidth: double.maxFinite,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+      child: Text(
+        title,
+        style: TextStyle(
+            color: type == RoundButtonType.primary ? TColor.white :  TColor.primary, fontSize: fontSize, fontWeight: fontWeight),
       ),
     );
   }
