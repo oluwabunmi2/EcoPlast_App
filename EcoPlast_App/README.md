@@ -1,5 +1,4 @@
-README.md
-                ** A Food delivey app**
+            ** A Food delivey app**
 How to Set Up the Project
 
 Follow the steps below to set up the mobile app development environment and run the app on your local machine or device:
@@ -40,4 +39,4 @@ OluwaBunmi Adebanjo - Github - Oluwabunmi2
 Celestin Hakorimana - Github - Celestin25
 Contributing
 
-This project is open for contributions. If you find any issues or have suggestions for improvements, feel free to create a pull request or raise an issue in the GitHub repository.
+This project is open for contributions. If you find any issues or have suggestions for improvements, feel free to create a pull request or raise an issue in the GitHub repository
