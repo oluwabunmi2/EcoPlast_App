@@ -1,5 +1,5 @@
 # 0x01-classification
-This directory contains work to build up skills needed to be able to build my own binary image classifier from scratch using numpy.
+This directory contains work to build up skills needed to be able to build binary image classifier from scratch using numpy.
 
 ## Mandatory Tasks:
 0. [Neuron](/supervised_learning/0x01-classification/0-neuron.py)
